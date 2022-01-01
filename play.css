@@ -75,6 +75,12 @@ body.Greece header.your_turn { background-color: salmon; }
 	width: 250px;
 	height: 350px;
 	border-radius: 12px;
+	display: none;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.card.show {
+	display: block;
 }
 
 .card_info .card {
@@ -141,6 +147,7 @@ body.Greece header.your_turn { background-color: salmon; }
 }
 
 #map {
+	position: relative;
 	width: 1240px;
 	height: 878px;
 	background-image: url("map.jpg");
