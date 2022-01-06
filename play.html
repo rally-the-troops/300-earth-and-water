@@ -6,10 +6,9 @@
 <title>300: E&amp;W</title>
 <link rel="icon" href="Achaemenid_Falcon.svg">
 <link rel="stylesheet" href="/fonts/fonts.css">
-<link rel="stylesheet" href="/common/grid.css">
+<link rel="stylesheet" href="/common/play.css">
 <link rel="stylesheet" href="play.css">
-<script defer src="/socket.io/socket.io.min.js"></script>
-<script defer src="/common/client.js"></script>
+<script defer src="/common/play.js"></script>
 <script defer src="play.js"></script>
 </head>
 <body>
@@ -41,11 +40,11 @@
 
 <aside>
 	<div id="roles">
-		<div class="role one">
+		<div class="role" id="role_Greece">
 			<div class="role_name">Greece &#x2013; <span class="role_user"></span></div>
 			<div class="role_info" id="greek_info">0 cards in hand</div>
 		</div>
-		<div class="role two">
+		<div class="role" id="role_Persia">
 			<div class="role_name">Persia &#x2013; <span class="role_user"></span></div>
 			<div class="role_info" id="persian_info">0 cards in hand</div>
 		</div>

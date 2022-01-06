@@ -3381,7 +3381,7 @@ exports.resign = function (state, current) {
 	return game;
 }
 
-exports.checkpoints = [ "campaign" ];
+exports.is_checkpoint = (a, b) => a.campaign !== b.campaign;
 
 exports.view = function(state, current) {
 	game = state;

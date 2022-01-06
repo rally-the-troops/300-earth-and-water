@@ -3,9 +3,9 @@ aside { background-color: gainsboro; }
 header { background-color: silver; }
 body.Persia header.your_turn { background-color: skyblue; }
 body.Greece header.your_turn { background-color: salmon; }
+#role_Persia .role_name { background-color: skyblue; }
+#role_Greece .role_name { background-color: salmon; }
 .role_info { background-color: silver; }
-.one .role_name { background-color: salmon; }
-.two .role_name { background-color: skyblue; }
 
 #log {
 	background-color: gainsboro;
@@ -191,7 +191,7 @@ body.Greece header.your_turn { background-color: salmon; }
 }
 
 .greek_army, .greek_fleet, .persian_army, .persian_fleet, .marker {
-	transition-property: top, left, transform;
+	transition-property: top, left;
 	transition-duration: 700ms;
 	transition-timing-function: ease;
 	z-index: 2;

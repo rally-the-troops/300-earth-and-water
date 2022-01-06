@@ -103,8 +103,8 @@ function on_blur_card_tip() {
 }
 
 function on_focus_discard(evt) {
-	if (game.discard)
-		document.getElementById("tooltip").className = "card show card_" + game.discard;
+	if (view.discard)
+		document.getElementById("tooltip").className = "card show card_" + view.discard;
 	else
 		document.getElementById("tooltip").className = "card";
 }
@@ -119,15 +119,15 @@ function on_focus_port(evt) { document.getElementById("status").textContent = ev
 function on_blur(evt) { document.getElementById("status").textContent = ""; }
 
 function on_click_bridge(evt) {
-	if (game.actions && game.actions.destroy)
+	if (view.actions && view.actions.destroy)
 		send_action('destroy');
-	else if (game.actions && game.actions.build)
+	else if (view.actions && view.actions.build)
 		send_action('build');
 }
 
 function on_click_army(evt) {
-	if (game.land_movement && player) {
-		let here = (player == PERSIA ? ui.persian_army : ui.greek_army)[game.land_movement];
+	if (view.land_movement && player) {
+		let here = (player === PERSIA ? ui.persian_army : ui.greek_army)[view.land_movement];
 		if (here.includes(evt.target)) {
 			if (ui.selected_armies && ui.selected_armies.includes(evt.target))
 				remove_from_array(ui.selected_armies, evt.target);
@@ -136,8 +136,8 @@ function on_click_army(evt) {
 		}
 		update_ui();
 	}
-	if (game.naval_transport && player) {
-		let here = (player == PERSIA ? ui.persian_army : ui.greek_army)[game.naval_movement];
+	if (view.naval_transport && player) {
+		let here = (player === PERSIA ? ui.persian_army : ui.greek_army)[view.naval_movement];
 		if (here.includes(evt.target)) {
 			if (ui.selected_armies && ui.selected_armies.includes(evt.target)) {
 				remove_from_array(ui.selected_armies, evt.target);
@@ -151,8 +151,8 @@ function on_click_army(evt) {
 }
 
 function on_click_fleet(evt) {
-	if (game.naval_movement && player) {
-		let here = (player == PERSIA ? ui.persian_fleet : ui.greek_fleet)[game.naval_movement];
+	if (view.naval_movement && player) {
+		let here = (player === PERSIA ? ui.persian_fleet : ui.greek_fleet)[view.naval_movement];
 		if (here.includes(evt.target)) {
 			if (ui.selected_fleets && ui.selected_fleets.includes(evt.target)) {
 				remove_from_array(ui.selected_fleets, evt.target);
@@ -167,23 +167,23 @@ function on_click_fleet(evt) {
 }
 
 function on_click_city(evt) {
-	if (!game.land_movement)
+	if (!view.land_movement)
 		return send_action('city', evt.target.city);
-	if (game.actions && game.actions.city && game.actions.city.includes(evt.target.city)) {
+	if (view.actions && view.actions.city && view.actions.city.includes(evt.target.city)) {
 		let armies = ui.selected_armies.length;
 		if (armies > 0)
-			socket.emit('action', 'city', [evt.target.city, armies]);
+			send_action('city', [evt.target.city, armies]);
 	}
 }
 
 function on_click_port(evt) {
-	if (!game.naval_movement)
+	if (!view.naval_movement)
 		send_action('port', evt.target.port);
-	if (game.actions && game.actions.port && game.actions.port.includes(evt.target.port)) {
+	if (view.actions && view.actions.port && view.actions.port.includes(evt.target.port)) {
 		let fleets = ui.selected_fleets.length;
 		if (fleets > 0) {
 			let armies = ui.selected_armies.length;
-			socket.emit('action', 'port', [evt.target.port, fleets, armies]);
+			send_action('port', [evt.target.port, fleets, armies]);
 		}
 	}
 }
@@ -278,21 +278,21 @@ function build_ui() {
 
 function greek_info() {
 	let text = "";
-	if (game.g_cards == 1)
+	if (view.g_cards === 1)
 		text += "1 card in hand";
 	else
-		text += game.g_cards + " cards in hand";
-	if (game.trigger.acropolis_on_fire)
+		text += view.g_cards + " cards in hand";
+	if (view.trigger.acropolis_on_fire)
 		text += "\nAcropolis on Fire!";
-	if (game.trigger.carneia_festival)
+	if (view.trigger.carneia_festival)
 		text += "\nCarneia Festival!";
 	return text;
 }
 
 function persian_info() {
-	if (game.p_cards == 1)
+	if (view.p_cards === 1)
 		return "1 card in hand";
-	return game.p_cards + " cards in hand";
+	return view.p_cards + " cards in hand";
 }
 
 function show_marker(id, class_name, show = 1, enabled = 0) {
@@ -308,13 +308,18 @@ function on_update() {
 	document.getElementById("greek_info").textContent = greek_info();
 	document.getElementById("persian_info").textContent = persian_info();
 
-	if (!game.discard)
+	if (player === GREECE)
+		document.getElementById("map").classList.add("greek");
+	else
+		document.getElementById("map").classList.remove("greek");
+
+	if (!view.discard)
 		document.getElementById("discard").className = "card show card_back";
 	else
-		document.getElementById("discard").className = "card show card_" + game.discard;
+		document.getElementById("discard").className = "card show card_" + view.discard;
 
 	document.getElementById("deck_info").textContent =
-		"Deck: " + game.deck_size + " \u2014 Discard: " + game.discard_size;
+		"Deck: " + view.deck_size + " \u2014 Discard: " + view.discard_size;
 
 	action_button("battle", "Battle");
 	action_button("build", "Build bridge");
@@ -324,32 +329,32 @@ function on_update() {
 	action_button("next", "Next");
 	action_button("undo", "Undo");
 
-	if (game.actions && game.actions.destroy)
+	if (view.actions && view.actions.destroy)
 		document.getElementById("bridge").className = "show destroy";
-	else if (game.actions && game.actions.build)
+	else if (view.actions && view.actions.build)
 		document.getElementById("bridge").className = "show build"
-	else if (game.trigger.hellespont)
+	else if (view.trigger.hellespont)
 		document.getElementById("bridge").className = "show";
 	else
 		document.getElementById("bridge").className = "";
 
-	show_marker("darius", "persian_army", game.trigger.darius);
-	show_marker("xerxes", "persian_army", game.trigger.xerxes);
-	show_marker("artemisia", "persian_fleet", game.trigger.artemisia);
-	show_marker("miltiades", "greek_army", game.trigger.miltiades);
-	show_marker("themistocles", "greek_army", game.trigger.themistocles);
-	show_marker("leonidas", "greek_army", game.trigger.leonidas);
-	show_marker("campaign", "marker campaign_" + game.campaign);
+	show_marker("darius", "persian_army", view.trigger.darius);
+	show_marker("xerxes", "persian_army", view.trigger.xerxes);
+	show_marker("artemisia", "persian_fleet", view.trigger.artemisia);
+	show_marker("miltiades", "greek_army", view.trigger.miltiades);
+	show_marker("themistocles", "greek_army", view.trigger.themistocles);
+	show_marker("leonidas", "greek_army", view.trigger.leonidas);
+	show_marker("campaign", "marker campaign_" + view.campaign);
 
-	if (game.vp < 0)
-		show_marker("vp", "marker vp_g" + (-game.vp));
-	else if (game.vp > 0)
-		show_marker("vp", "marker vp_p" + game.vp);
+	if (view.vp < 0)
+		show_marker("vp", "marker vp_g" + (-view.vp));
+	else if (view.vp > 0)
+		show_marker("vp", "marker vp_p" + view.vp);
 	else
 		show_marker("vp", "marker vp_0");
 
-	let hand = game.hand;
-	let draw = game.draw;
+	let hand = view.hand;
+	let draw = view.draw;
 	for (let c = 1; c <= 16; ++c) {
 		ui.cards[c].classList.remove('enabled');
 		if (hand && hand.includes(c))
@@ -362,7 +367,7 @@ function on_update() {
 			ui.backs[c].classList.remove('show');
 	}
 
-	if (game.show_greek_hand)
+	if (view.show_greek_hand)
 		document.getElementById("hand").classList.add("greek");
 	else
 		document.getElementById("hand").classList.remove("greek");
@@ -372,17 +377,17 @@ function on_update() {
 		let extra = elements.extra;
 
 		// remove if too many
-		for (let space in game.units) {
+		for (let space in view.units) {
 			let list = elements[space];
-			let n = game.units[space][index] | 0;
+			let n = view.units[space][index] | 0;
 			while (list.length > n)
 				overflow.push(list.shift());
 		}
 
 		// add if not enough
-		for (let space in game.units) {
+		for (let space in view.units) {
 			let list = elements[space];
-			let n = game.units[space][index];
+			let n = view.units[space][index];
 			while (list.length < n) {
 				if (overflow.length > 0) {
 					list.unshift(overflow.pop());
@@ -408,21 +413,21 @@ function on_update() {
 	update_units(3, ui.persian_fleet);
 
 	ui.selected_armies = null;
-	if (game.land_movement) {
-		if (player == PERSIA)
-			ui.selected_armies = ui.persian_army[game.land_movement].slice();
-		if (player == GREECE)
-			ui.selected_armies = ui.greek_army[game.land_movement].slice();
+	if (view.land_movement) {
+		if (player === PERSIA)
+			ui.selected_armies = ui.persian_army[view.land_movement].slice();
+		if (player === GREECE)
+			ui.selected_armies = ui.greek_army[view.land_movement].slice();
 	}
 
 	ui.selected_fleets = null;
-	if (game.naval_movement) {
-		if (player == PERSIA) {
-			ui.selected_fleets = ui.persian_fleet[game.naval_movement].slice();
+	if (view.naval_movement) {
+		if (player === PERSIA) {
+			ui.selected_fleets = ui.persian_fleet[view.naval_movement].slice();
 			ui.selected_armies = [];
 		}
-		if (player == GREECE) {
-			ui.selected_fleets = ui.greek_fleet[game.naval_movement].slice();
+		if (player === GREECE) {
+			ui.selected_fleets = ui.greek_fleet[view.naval_movement].slice();
 			ui.selected_armies = [];
 		}
 	}
@@ -432,12 +437,12 @@ function on_update() {
 	for (let port in PORTS)
 		ui.ports[port].classList.remove('enabled');
 
-	if (game.actions && game.actions.city) {
-		for (let city of game.actions.city)
+	if (view.actions && view.actions.city) {
+		for (let city of view.actions.city)
 			ui.cities[city].classList.add('enabled');
 	}
-	if (game.actions && game.actions.port) {
-		for (let port of game.actions.port)
+	if (view.actions && view.actions.port) {
+		for (let port of view.actions.port)
 			ui.ports[port].classList.add('enabled');
 	}
 
@@ -456,13 +461,13 @@ function update_ui() {
 			let i = 0, k = 0;
 			para.push(line = []);
 			for (let e of a) {
-				if (i == wrap - k) { para.push(line = []); i = 0; k = 1 - k; }
+				if (i === wrap - k) { para.push(line = []); i = 0; k = 1 - k; }
 				line.push(e);
 				++i;
 			}
-			if (i != 0 && b.length > 0) { para.push(line = []); i = 0; k = 1 - k; }
+			if (i !== 0 && b.length > 0) { para.push(line = []); i = 0; k = 1 - k; }
 			for (let e of b) {
-				if (i == wrap - k) { para.push(line = []); i = 0; k = 1 - k; }
+				if (i === wrap - k) { para.push(line = []); i = 0; k = 1 - k; }
 				line.push(e);
 				++i;
 			}
@@ -497,7 +502,7 @@ function update_ui() {
 			}
 			let z = 50;
 			let i = 0;
-			if (player == GREECE)
+			if (player === GREECE)
 				for (let row = nrow-1; row >= 0; --row)
 					for (let col = ncol-1; col >= 0 && i < list.length; --col)
 						layout_army(row, col, list[i++], z--);
@@ -511,13 +516,13 @@ function update_ui() {
 	function list_armies(city) {
 		let ga = ui.greek_army[city];
 		let pa = ui.persian_army[city];
-		if (game.transport && game.transport.where == city) {
-			if (game.transport.who == GREECE)
-				ga = ga.slice(game.transport.count);
-			if (game.transport.who == PERSIA)
-				pa = pa.slice(game.transport.count);
+		if (view.transport && view.transport.where === city) {
+			if (view.transport.who === GREECE)
+				ga = ga.slice(view.transport.count);
+			if (view.transport.who === PERSIA)
+				pa = pa.slice(view.transport.count);
 		}
-		if (game.naval_movement) {
+		if (view.naval_movement) {
 			ga = ga.filter(a => !ui.selected_armies.includes(a));
 			pa = pa.filter(a => !ui.selected_armies.includes(a));
 		}
@@ -539,21 +544,21 @@ function update_ui() {
 
 	function layout_transport(a, f) {
 		a.style.left = (parseInt(f.style.left) + 13 - 11) + "px";
-		if (player == GREECE)
+		if (player === GREECE)
 			a.style.top = (parseInt(f.style.top) + 10 - 13 + 10) + "px";
 		else
 			a.style.top = (parseInt(f.style.top) + 10 - 13 - 10) + "px";
 		a.style.zIndex = 2;
 	}
 
-	if (game.transport) {
-		let city = game.transport.where;
-		let alist = (game.transport.who == GREECE ? ui.greek_army : ui.persian_army)[city];
-		let flist = (game.transport.who == GREECE ? ui.greek_fleet : ui.persian_fleet)[city];
-		for (let i = 0; i < game.transport.count; ++i)
+	if (view.transport) {
+		let city = view.transport.where;
+		let alist = (view.transport.who === GREECE ? ui.greek_army : ui.persian_army)[city];
+		let flist = (view.transport.who === GREECE ? ui.greek_fleet : ui.persian_fleet)[city];
+		for (let i = 0; i < view.transport.count; ++i)
 			layout_transport(alist[i], flist[i]);
 	}
-	if (game.naval_movement) {
+	if (view.naval_movement) {
 		for (let i = 0; i < ui.selected_armies.length; ++i)
 			layout_transport(ui.selected_armies[i], ui.selected_fleets[i]);
 	}
@@ -605,11 +610,11 @@ function on_card_move() {
 }
 
 function is_card_action(action, card) {
-	return game.actions && game.actions[action] && game.actions[action].includes(card);
+	return view.actions && view.actions[action] && view.actions[action].includes(card);
 }
 
 function on_card(evt) {
-	if (game.actions) {
+	if (view.actions) {
 		let card = evt.target.card;
 		if (is_card_action('discard', card)) {
 			send_action('discard', card);
@@ -631,9 +636,8 @@ function toggle_markers() {
 	document.getElementById("map").classList.toggle("hide_markers");
 }
 
-if (param_role == GREECE)
+if (params.role === GREECE)
 	document.getElementById("map").classList.add("greek");
 
 build_ui();
 scroll_with_middle_mouse("main", 2);
-init_client(["Greece", "Persia"]);
