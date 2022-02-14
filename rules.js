@@ -38,6 +38,11 @@ exports.scenarios = [
 	"Standard"
 ];
 
+exports.roles = [
+	"Persia",
+	"Greece",
+];
+
 const OBSERVER = "Observer";
 const GREECE = "Greece";
 const PERSIA = "Persia";
