@@ -3355,6 +3355,11 @@ exports.setup = function (seed, scenario, options) {
 		log: [],
 	};
 
+	if (options.cheap_fleets) {
+		log("Each fleet costs only 1 talent.");
+		log("");
+	}
+
 	start_campaign();
 
 	return game;
