@@ -52,26 +52,9 @@ body.Greece header.your_turn { background-color: salmon; }
 
 /* CARDS */
 
-.card_back { background-image: url('cards/card_back.jpg'); }
-.card_1 { background-image: url('cards/card_en_01.jpg'); }
-.card_2 { background-image: url('cards/card_en_02.jpg'); }
-.card_3 { background-image: url('cards/card_en_03.jpg'); }
-.card_4 { background-image: url('cards/card_en_04.jpg'); }
-.card_5 { background-image: url('cards/card_en_05.jpg'); }
-.card_6 { background-image: url('cards/card_en_06.jpg'); }
-.card_7 { background-image: url('cards/card_en_07.jpg'); }
-.card_8 { background-image: url('cards/card_en_08.jpg'); }
-.card_9 { background-image: url('cards/card_en_09.jpg'); }
-.card_10 { background-image: url('cards/card_en_10.jpg'); }
-.card_11 { background-image: url('cards/card_en_11.jpg'); }
-.card_12 { background-image: url('cards/card_en_12.jpg'); }
-.card_13 { background-image: url('cards/card_en_13.jpg'); }
-.card_14 { background-image: url('cards/card_en_14.jpg'); }
-.card_15 { background-image: url('cards/card_en_15.jpg'); }
-.card_16 { background-image: url('cards/card_en_16.jpg'); }
-
 .card {
 	background-repeat: no-repeat;
+	background-color: #f0e0d0;
 	width: 250px;
 	height: 350px;
 	border-radius: 12px;
@@ -150,10 +133,16 @@ body.Greece header.your_turn { background-color: salmon; }
 	position: relative;
 	width: 1240px;
 	height: 878px;
-	background-image: url("map.jpg");
 	background-size: cover;
 	box-shadow: 0px 1px 10px rgba(0,0,0,0.5);
 	margin: 0 auto;
+}
+
+html.avif #map { background-image: url("map.1x.avif") }
+html.jpeg #map { background-image: url("map.1x.jpg") }
+@media (min-resolution: 97dpi) {
+	html.avif #map { background-image: url("map.2x.avif") }
+	html.jpeg #map { background-image: url("map.2x.jpg") }
 }
 
 #map.hide_markers > div {
@@ -257,4 +246,77 @@ body.Greece header.your_turn { background-color: salmon; }
 	background-image: url("icons/bridge.png");
 	width: 48px; height: 36px;
 	left: 932px; top: 655px;
+}
+
+/* CARD IMAGES */
+
+html.avif .card_back { background-image: url('cards.1x/card_back.avif'); }
+html.avif .card_1 { background-image: url('cards.1x/card_en_01.avif'); }
+html.avif .card_2 { background-image: url('cards.1x/card_en_02.avif'); }
+html.avif .card_3 { background-image: url('cards.1x/card_en_03.avif'); }
+html.avif .card_4 { background-image: url('cards.1x/card_en_04.avif'); }
+html.avif .card_5 { background-image: url('cards.1x/card_en_05.avif'); }
+html.avif .card_6 { background-image: url('cards.1x/card_en_06.avif'); }
+html.avif .card_7 { background-image: url('cards.1x/card_en_07.avif'); }
+html.avif .card_8 { background-image: url('cards.1x/card_en_08.avif'); }
+html.avif .card_9 { background-image: url('cards.1x/card_en_09.avif'); }
+html.avif .card_10 { background-image: url('cards.1x/card_en_10.avif'); }
+html.avif .card_11 { background-image: url('cards.1x/card_en_11.avif'); }
+html.avif .card_12 { background-image: url('cards.1x/card_en_12.avif'); }
+html.avif .card_13 { background-image: url('cards.1x/card_en_13.avif'); }
+html.avif .card_14 { background-image: url('cards.1x/card_en_14.avif'); }
+html.avif .card_15 { background-image: url('cards.1x/card_en_15.avif'); }
+html.avif .card_16 { background-image: url('cards.1x/card_en_16.avif'); }
+html.jpeg .card_back { background-image: url('cards.1x/card_back.jpg'); }
+html.jpeg .card_1 { background-image: url('cards.1x/card_en_01.jpg'); }
+html.jpeg .card_2 { background-image: url('cards.1x/card_en_02.jpg'); }
+html.jpeg .card_3 { background-image: url('cards.1x/card_en_03.jpg'); }
+html.jpeg .card_4 { background-image: url('cards.1x/card_en_04.jpg'); }
+html.jpeg .card_5 { background-image: url('cards.1x/card_en_05.jpg'); }
+html.jpeg .card_6 { background-image: url('cards.1x/card_en_06.jpg'); }
+html.jpeg .card_7 { background-image: url('cards.1x/card_en_07.jpg'); }
+html.jpeg .card_8 { background-image: url('cards.1x/card_en_08.jpg'); }
+html.jpeg .card_9 { background-image: url('cards.1x/card_en_09.jpg'); }
+html.jpeg .card_10 { background-image: url('cards.1x/card_en_10.jpg'); }
+html.jpeg .card_11 { background-image: url('cards.1x/card_en_11.jpg'); }
+html.jpeg .card_12 { background-image: url('cards.1x/card_en_12.jpg'); }
+html.jpeg .card_13 { background-image: url('cards.1x/card_en_13.jpg'); }
+html.jpeg .card_14 { background-image: url('cards.1x/card_en_14.jpg'); }
+html.jpeg .card_15 { background-image: url('cards.1x/card_en_15.jpg'); }
+html.jpeg .card_16 { background-image: url('cards.1x/card_en_16.jpg'); }
+@media (min-resolution: 97dpi) {
+html.avif .card_back { background-image: url('cards.2x/card_back.avif'); }
+html.avif .card_1 { background-image: url('cards.2x/card_en_01.avif'); }
+html.avif .card_2 { background-image: url('cards.2x/card_en_02.avif'); }
+html.avif .card_3 { background-image: url('cards.2x/card_en_03.avif'); }
+html.avif .card_4 { background-image: url('cards.2x/card_en_04.avif'); }
+html.avif .card_5 { background-image: url('cards.2x/card_en_05.avif'); }
+html.avif .card_6 { background-image: url('cards.2x/card_en_06.avif'); }
+html.avif .card_7 { background-image: url('cards.2x/card_en_07.avif'); }
+html.avif .card_8 { background-image: url('cards.2x/card_en_08.avif'); }
+html.avif .card_9 { background-image: url('cards.2x/card_en_09.avif'); }
+html.avif .card_10 { background-image: url('cards.2x/card_en_10.avif'); }
+html.avif .card_11 { background-image: url('cards.2x/card_en_11.avif'); }
+html.avif .card_12 { background-image: url('cards.2x/card_en_12.avif'); }
+html.avif .card_13 { background-image: url('cards.2x/card_en_13.avif'); }
+html.avif .card_14 { background-image: url('cards.2x/card_en_14.avif'); }
+html.avif .card_15 { background-image: url('cards.2x/card_en_15.avif'); }
+html.avif .card_16 { background-image: url('cards.2x/card_en_16.avif'); }
+html.jpeg .card_back { background-image: url('cards.2x/card_back.jpg'); }
+html.jpeg .card_1 { background-image: url('cards.2x/card_en_01.jpg'); }
+html.jpeg .card_2 { background-image: url('cards.2x/card_en_02.jpg'); }
+html.jpeg .card_3 { background-image: url('cards.2x/card_en_03.jpg'); }
+html.jpeg .card_4 { background-image: url('cards.2x/card_en_04.jpg'); }
+html.jpeg .card_5 { background-image: url('cards.2x/card_en_05.jpg'); }
+html.jpeg .card_6 { background-image: url('cards.2x/card_en_06.jpg'); }
+html.jpeg .card_7 { background-image: url('cards.2x/card_en_07.jpg'); }
+html.jpeg .card_8 { background-image: url('cards.2x/card_en_08.jpg'); }
+html.jpeg .card_9 { background-image: url('cards.2x/card_en_09.jpg'); }
+html.jpeg .card_10 { background-image: url('cards.2x/card_en_10.jpg'); }
+html.jpeg .card_11 { background-image: url('cards.2x/card_en_11.jpg'); }
+html.jpeg .card_12 { background-image: url('cards.2x/card_en_12.jpg'); }
+html.jpeg .card_13 { background-image: url('cards.2x/card_en_13.jpg'); }
+html.jpeg .card_14 { background-image: url('cards.2x/card_en_14.jpg'); }
+html.jpeg .card_15 { background-image: url('cards.2x/card_en_15.jpg'); }
+html.jpeg .card_16 { background-image: url('cards.2x/card_en_16.jpg'); }
 }
