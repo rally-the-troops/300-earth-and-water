@@ -12,8 +12,7 @@ body.Greece header.your_turn { background-color: salmon; }
 }
 
 #log .tip {
-	cursor: help;
-	text-decoration: dotted underline;
+	text-decoration: underline;
 }
 
 #log .st {
