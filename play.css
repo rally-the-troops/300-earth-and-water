@@ -24,8 +24,11 @@ body.Greece header.your_turn { background-color: salmon; }
 }
 
 #log .hr {
-	border-top: 1px solid darkgray;
-	padding-top: 9px;
+	background-color: darkgray;
+	margin: 9px 0;
+	padding: 0;
+	height: 1px;
+	min-height: 0;
 }
 
 #log .G { color: #c00; }
