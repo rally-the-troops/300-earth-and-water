@@ -11,6 +11,9 @@
 // Diary: 2021-05-08 - Saturday Afternoon - Polish game log messages.
 // Diary: 2021-10-01 - Friday Afternoon - Fix bugs.
 
+// TODO: Miltiades as offensive reaction after naval battle
+// TODO: Only ask about burning persia after a battle/taking control first time
+
 // Acropolis on Fire -- if sudden death of the great king, does greece get 6 or 5 talents for the next campaign?
 // leonidas + miltiades -- forbid combination?
 
@@ -326,7 +329,7 @@ function create_deck() {
 }
 
 function reshuffle() {
-	log("The deck was reshuffled.");
+	log("Reshuffled the deck.");
 	while (game.discard.length > 0)
 		game.deck.push(game.discard.pop());
 }
