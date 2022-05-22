@@ -49,7 +49,6 @@ exports.roles = [
 const OBSERVER = "Observer";
 const GREECE = "Greece";
 const PERSIA = "Persia";
-const BOTH = "Both";
 
 const RESERVE = "reserve";
 const ABYDOS = "Abydos";
@@ -299,7 +298,7 @@ function gen_action_undo(view) {
 }
 
 function is_inactive_player(current) {
-	return current === OBSERVER || (game.active !== current && game.active !== BOTH);
+	return game.active !== current;
 }
 
 function gen_action(view, action, argument) {
