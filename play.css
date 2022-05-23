@@ -280,6 +280,23 @@ html.jpeg #map { background-image: url("map.1x.jpg") }
 	left: 932px; top: 655px;
 }
 
+/* MOBILE PHONE LAYOUT */
+
+@media (max-width: 640px) {
+	.hand .card {
+		width: 125px;
+		height: 175px;
+		border-radius: 6px;
+	}
+	.hand {
+		min-height: 125px;
+	}
+	#tooltip.card {
+		top: 10px;
+		right: 10px;
+	}
+}
+
 /* CARD IMAGES */
 
 html.avif .card_back { background-image: url('cards.1x/card_back.avif'); }
